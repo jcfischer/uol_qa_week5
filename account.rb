@@ -25,7 +25,7 @@ module AtmPackage
     end
 
     def deposit deposit_amount
-      if deposit_amount > 300000000.0
+      if deposit_amount > 300_000_000.0
         puts "Error - exceeded deposit limit of 300,000,000! Balance is still #{@balance}";
       else
         if deposit_amount <= 0
