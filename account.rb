@@ -6,11 +6,10 @@ module AtmPackage
     def initialize balance
       if balance < 0
         balance = 0
-        puts "Error, balance cannot be negative. Defaultng to 0"
+        puts "Error, balance cannot be negative. Defaulting to 0"
         # error 1: @balance not assigned
-      else
-        self.balance = balance
       end
+      self.balance = balance
     end
 
     def balance= balance
