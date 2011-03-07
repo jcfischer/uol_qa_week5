@@ -65,14 +65,14 @@ module AtmPackage
           # other object. It should be the responsibility of the receiving object
           # to get the money (for example by using the deposit method) I would
           # probably disallow the balance= setter at all
-          receiving_account.balance = receivingAcct.balance + transfer_amount
+          receiving_account.balance = receiving_account.balance + transfer_amount
           @balance = @balance - transfer_amount
         end
       end
     end
 
     def == an_account
-      if an_account.responds_to?(:balance)
+      if an_account.respond_to?(:balance)
         return an_account.balance == self.balance
       end
       return false

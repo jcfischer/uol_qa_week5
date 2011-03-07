@@ -39,7 +39,7 @@ describe AtmPackage::Account do
       account.balance.should == 0
     end
   end
-  
+
   context "#deposit" do
     let(:account) { AtmPackage::Account.new 100 }
 
@@ -60,6 +60,93 @@ describe AtmPackage::Account do
   end
 
   context "#withdraw" do
+    let(:account) { AtmPackage::Account.new 1000 }
 
+    it "should correctly withdraw a sum smaller than the current balance" do
+      account.withdraw 50
+      account.balance.should == 950
+    end
+
+    it "should not allow to withdraw more than the balance" do
+      account.withdraw 1100
+      account.balance.should == 1000
+    end
+
+    it "should not allow to withdraw more then the withdrawal limit" do
+      account.withdraw 600
+      account.balance.should == 1000
+    end
   end
+
+  context "#transfer_funds" do
+    context "balance available" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 100 }
+
+      before(:each) do
+        account_1.transfer_funds account_2, 20
+      end
+
+      it "should debit the amount from account_1" do
+        account_1.balance.should == 80
+      end
+      it "should credit the amount to account_2" do
+        account_2.balance.should == 120
+      end
+    end
+
+    context "negative transfer amount" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 100 }
+
+      before(:each) do
+        account_1.transfer_funds account_2, -20
+      end
+
+      it "should not debit the amount from account_1" do
+        account_1.balance.should == 100
+      end
+      it "should not credit the amount to account_2" do
+        account_2.balance.should == 100
+      end
+    end
+
+    context "overdrawn transfer amount" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 100 }
+
+      before(:each) do
+        account_1.transfer_funds account_2, 120
+      end
+
+      it "should not debit the amount from account_1" do
+        account_1.balance.should == 100
+      end
+      it "should not credit the amount to account_2" do
+        account_2.balance.should == 100
+      end
+    end
+  end
+
+  context "#==" do
+    context "identical balance" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 100 }
+
+      it "should treat the accounts as equal" do
+        account_1.should == account_2
+      end
+    end
+
+    context "different balance" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 102 }
+
+      it "should not treat the accounts as equal" do
+        account_1.should_not == account_2
+      end
+    end
+  end
+
+
 end
