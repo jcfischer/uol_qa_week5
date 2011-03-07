@@ -1,0 +1,16 @@
+Getting Started:
+
+* Install Ruby
+  Non Windows Machines: http://ruby-lang.org
+  Windows: http://rubyinstaller.org/
+
+* Install the bundler Gem
+    sudo gem install bundler
+    c:\> gem install bundler
+
+* run bundler to install the required Gems described in the Gemfile
+    bundle install
+
+* run the specs
+
+    rspec account_spec.rb
