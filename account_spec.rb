@@ -148,5 +148,19 @@ describe AtmPackage::Account do
     end
   end
 
+  context "Expose withdraw bug" do
+    let(:account_1) { AtmPackage::Account.new 10_000_000_000_000 }
+    let(:account_2) { AtmPackage::Account.new 10_000_000_000_000 }
+
+    before(:each) do
+      account_1.transfer_funds account_2, 9_000_000_000_000.0
+    end
+    it "should transfer 9_000_000_000_000" do
+      account_1.balance.should == 1_000_000_000_000.0
+    end
+    it "should deduct from account 2" do
+      account_2.balance.should == 19_000_000_000_000.0
+    end
+  end
 
 end
