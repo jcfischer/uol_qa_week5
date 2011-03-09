@@ -155,10 +155,10 @@ describe AtmPackage::Account do
     before(:each) do
       account_1.transfer_funds account_2, 9_000_000_000_000.0
     end
-    it "should transfer 9_000_000_000_000" do
+    it "should debit from account 1" do
       account_1.balance.should == 1_000_000_000_000.0
     end
-    it "should deduct from account 2" do
+    it "should credit to account 2" do
       account_2.balance.should == 19_000_000_000_000.0
     end
   end
