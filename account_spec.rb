@@ -148,7 +148,7 @@ describe AtmPackage::Account do
     end
   end
 
-  context "Expose withdraw bug" do
+  context "Expose transfer_funds bug" do
     let(:account_1) { AtmPackage::Account.new 10_000_000_000_000 }
     let(:account_2) { AtmPackage::Account.new 10_000_000_000_000 }
 
