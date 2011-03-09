@@ -76,6 +76,11 @@ describe AtmPackage::Account do
       account.withdraw 600
       account.balance.should == 1000
     end
+
+    it "should not allow to withdraw a negative amount" do
+      account.withdraw -600
+      account.balance.should == 1000
+    end
   end
 
   context "#transfer_funds" do
@@ -145,6 +150,20 @@ describe AtmPackage::Account do
       it "should not treat the accounts as equal" do
         account_1.should_not == account_2
       end
+    end
+
+    context "objects does not respond to balance" do
+      let(:account_1) { AtmPackage::Account.new 100 }
+      let(:account_2) { AtmPackage::Account.new 102 }
+
+      it "should not treat the accounts as equal" do
+        "account_1".should_not == account_2
+      end
+
+      it "should not treat the accounts as equal" do
+        account_1.should_not == "account_2"
+      end
+
     end
   end
 
